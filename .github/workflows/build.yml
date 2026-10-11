@@ -28,28 +28,20 @@ jobs:
           APPID=$(grep -m1 -oP 'applicationId\s*=?\s*"\K[^"]+' android/app/build.gradle || true)
           [ -z "$APPID" ] && APPID=com.fatouratti.app
           printf '{"appId":"%s","appName":"Fatouratti","webDir":"%s"}' "$APPID" "$OUT" > capacitor.config.json
-          cat capacitor.config.json
-          ls "$OUT" | head
       - run: npx cap sync android
-      - run: |
+      - name: Fix icon
+        run: |
           M=android/app/src/main/AndroidManifest.xml
-          mkdir -p android/app/src/main/res/drawable
-          cat > android/app/src/main/res/drawable/ic_launcher.xml <<'EOF'
-          <?xml version="1.0" encoding="utf-8"?>
-          <vector xmlns:android="http://schemas.android.com/apk/res/android"
-              android:width="108dp" android:height="108dp"
-              android:viewportWidth="108" android:viewportHeight="108">
-              <path android:fillColor="#2563EB" android:pathData="M0,0h108v108h-108z" />
-              <path android:fillColor="#FFFFFF" android:pathData="M34,28h32l12,12v40h-44z" />
-              <path android:fillColor="#2563EB" android:pathData="M42,50h24v4h-24zM42,60h24v4h-24zM42,70h16v4h-16z" />
-          </vector>
-          EOF
-          sed -i 's#@mipmap/ic_launcher_round#@drawable/ic_launcher#; s#@mipmap/ic_launcher#@drawable/ic_launcher#' "$M"
-          grep -n icon "$M"
-                - run: |
+          D=android/app/src/main/res/drawable
+          mkdir -p $D
+          printf '%s\n' '<?xml version="1.0" encoding="utf-8"?>' '<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">' '<path android:fillColor="#2563EB" android:pathData="M0,0h108v108h-108z"/>' '<path android:fillColor="#FFFFFF" android:pathData="M34,28h32l12,12v40h-44z"/>' '</vector>' > $D/ic_launcher.xml
+          sed -i 's#@mipmap/ic_launcher_round#@drawable/ic_launcher#; s#@mipmap/ic_launcher#@drawable/ic_launcher#' $M
+          grep -n icon $M
+      - name: Fix PdfGenerator
+        run: |
           F=android/app/src/main/java/com/facturation/client/util/PdfGenerator.kt
-          sed -i 's/items: List<InvoiceItem>): File {/items: List<InvoiceItem>, clientPhone: String = ""): File {/; s/\${invoice.clientPhone}/$clientPhone/' "$F"
-          grep -n clientPhone "$F"
+          sed -i 's/items: List<InvoiceItem>): File {/items: List<InvoiceItem>, clientPhone: String = ""): File {/; s/\${invoice.clientPhone}/$clientPhone/' $F
+          grep -n clientPhone $F
       - run: cd android && gradle assembleDebug --stacktrace
       - run: mv android/app/build/outputs/apk/debug/app-debug.apk Fatouratti.apk
       - uses: softprops/action-gh-release@v2
