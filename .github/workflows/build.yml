@@ -46,6 +46,10 @@ jobs:
           EOF
           sed -i 's#@mipmap/ic_launcher_round#@drawable/ic_launcher#; s#@mipmap/ic_launcher#@drawable/ic_launcher#' "$M"
           grep -n icon "$M"
+                - run: |
+          F=android/app/src/main/java/com/facturation/client/util/PdfGenerator.kt
+          sed -i 's/items: List<InvoiceItem>): File {/items: List<InvoiceItem>, clientPhone: String = ""): File {/; s/\${invoice.clientPhone}/$clientPhone/' "$F"
+          grep -n clientPhone "$F"
       - run: cd android && gradle assembleDebug --stacktrace
       - run: mv android/app/build/outputs/apk/debug/app-debug.apk Fatouratti.apk
       - uses: softprops/action-gh-release@v2
