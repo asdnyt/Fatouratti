@@ -20,10 +20,13 @@ jobs:
       - run: npm run build
       - run: npm install --legacy-peer-deps @capacitor/core @capacitor/cli @capacitor/android
       - run: |
-          for f in capacitor.config.json capacitor.config.ts; do
-            [ -f "$f" ] && sed -i "s#\"webDir\": *\"[^\"]*\"#\"webDir\": \"dist\"#; s#webDir: *['\"][^'\"]*['\"]#webDir: 'dist'#" "$f"
-          done
-          ls dist | head
+          OUT=dist
+          [ -d dist ] || OUT=build
+          APPID=$(grep -m1 -oP 'applicationId\s*=?\s*"\K[^"]+' android/app/build.gradle || true)
+          [ -z "$APPID" ] && APPID=com.fatouratti.app
+          printf '{"appId":"%s","appName":"Fatouratti","webDir":"%s"}' "$APPID" "$OUT" > capacitor.config.json
+          cat capacitor.config.json
+          ls "$OUT" | head
       - run: npx cap sync android
       - run: chmod +x android/gradlew && cd android && ./gradlew assembleDebug --stacktrace
       - run: mv android/app/build/outputs/apk/debug/app-debug.apk Fatouratti.apk
