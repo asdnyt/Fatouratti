@@ -1,0 +1,6 @@
+{
+  "name": "Gestion Clients & Facturation",
+  "description": "Application Android native et hors-ligne pour la gestion des clients, factures/bons de vente et suivi de la situation financière.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

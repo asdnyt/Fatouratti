@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#grad)" />
+  <!-- Receipt / Document shape -->
+  <rect x="116" y="96" width="280" height="320" rx="24" fill="#FFFFFF" />
+  <!-- Receipt header bars -->
+  <rect x="156" y="146" width="130" height="20" rx="8" fill="#2563EB" />
+  <rect x="306" y="146" width="50" height="20" rx="8" fill="#10B981" />
+  <!-- Divider -->
+  <line x1="156" y1="196" x2="356" y2="196" stroke="#E2E8F0" stroke-width="4" stroke-linecap="round" />
+  <!-- Line items -->
+  <rect x="156" y="226" width="140" height="14" rx="6" fill="#64748B" />
+  <rect x="316" y="226" width="40" height="14" rx="6" fill="#0F172A" />
+  <rect x="156" y="260" width="110" height="14" rx="6" fill="#64748B" />
+  <rect x="316" y="260" width="40" height="14" rx="6" fill="#0F172A" />
+  <!-- Total section -->
+  <line x1="156" y1="300" x2="356" y2="300" stroke="#CBD5E1" stroke-width="4" stroke-dasharray="8 6" />
+  <rect x="156" y="324" width="80" height="18" rx="6" fill="#1E293B" />
+  <rect x="296" y="324" width="60" height="18" rx="6" fill="#2563EB" />
+  <!-- Checkmark badge -->
+  <circle cx="360" cy="380" r="44" fill="#10B981" />
+  <path d="M346 380 L356 390 L376 370" fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

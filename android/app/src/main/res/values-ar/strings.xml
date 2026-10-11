@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">إدارة العملاء والفواتير</string>
+    <string name="clients_title">العملاء</string>
+    <string name="invoices_title">الفواتير</string>
+    <string name="situation_title">الوضعية المالية</string>
+    <string name="new_client">عميل جديد</string>
+    <string name="save_invoice">حفظ الفاتورة</string>
+    <string name="share_whatsapp">مشاركة عبر واتساب</string>
+</resources>
